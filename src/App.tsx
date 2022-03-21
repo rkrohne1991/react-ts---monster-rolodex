@@ -50,6 +50,7 @@ class App extends Component<AppProps, MonsterSearchProps> {
 
     return (
       <div className="App">
+        <h1 className="app-title">Monster Rolodex</h1>
         <SearchBox
           onSearchChange={onSearchChange}
           placeholder="Search monsters"

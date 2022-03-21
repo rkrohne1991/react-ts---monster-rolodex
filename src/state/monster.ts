@@ -1,6 +1,7 @@
 export interface Monster {
-  id: string;
+  id: number;
   name: string;
+  email: string;
 }
 
 export interface MonsterSearchProps {
