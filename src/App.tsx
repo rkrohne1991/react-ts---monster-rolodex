@@ -1,36 +1,39 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import "./App.css";
 
-interface AppProps {}
-interface AppState {
-  [key: string]: { name: string; id: string }[];
+interface Monster {
+  id: string;
+  name: string;
 }
 
-class App extends React.Component<AppProps, AppState> {
+interface MonsterProps {
+  monsters: Monster[];
+}
+
+interface AppProps {}
+
+class App extends Component<AppProps, MonsterProps> {
   constructor(props: AppProps) {
     super(props);
 
     this.state = {
-      monsters: [
-        {
-          name: "Linda",
-          id: "0",
-        },
-        {
-          name: "Frank",
-          id: "1",
-        },
-        {
-          name: "Jacky",
-          id: "2",
-        },
-        {
-          name: "Andrei",
-          id: "3",
-        },
-      ],
+      monsters: [],
     };
   }
+
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) =>
+        this.setState(
+          () => {
+            return { monsters: users };
+          },
+          () => console.log(this.state)
+        )
+      );
+  }
+
   render() {
     return (
       <div className="App">
