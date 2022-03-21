@@ -3,6 +3,7 @@ import "./App.css";
 
 import CardList from "./components/card-list/card-list.component";
 import { MonsterSearchProps } from "./state/monster";
+import SearchBox from "./components/search-box/search-box.component";
 
 interface AppProps {}
 
@@ -49,11 +50,10 @@ class App extends Component<AppProps, MonsterSearchProps> {
 
     return (
       <div className="App">
-        <input
+        <SearchBox
           className="search-box"
-          type="search"
+          onSearchChange={onSearchChange}
           placeholder="Search monsters"
-          onChange={onSearchChange}
         />
         <CardList monsters={filteredMonsters} />
       </div>
