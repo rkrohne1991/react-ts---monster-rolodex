@@ -1,15 +1,8 @@
 import { Component } from "react";
 import "./App.css";
 
-interface Monster {
-  id: string;
-  name: string;
-}
-
-interface MonsterSearchProps {
-  monsters: Monster[];
-  searchField: string;
-}
+import CardList from "./components/card-list/card-list.component";
+import { MonsterSearchProps } from "./state/monster";
 
 interface AppProps {}
 
@@ -24,15 +17,15 @@ class App extends Component<AppProps, MonsterSearchProps> {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    // console.log("componentDidMount");
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((users) =>
         this.setState(
           () => {
             return { monsters: users };
-          },
-          () => console.log(this.state)
+          }
+          // () => console.log(this.state)
         )
       );
   }
@@ -45,7 +38,7 @@ class App extends Component<AppProps, MonsterSearchProps> {
   };
 
   render() {
-    console.log("render");
+    // console.log("render");
 
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
@@ -62,9 +55,7 @@ class App extends Component<AppProps, MonsterSearchProps> {
           placeholder="Search monsters"
           onChange={onSearchChange}
         />
-        {filteredMonsters.map((monster) => {
-          return <h1 key={monster.id}>{monster.name}</h1>;
-        })}
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
