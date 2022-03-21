@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "./App.css";
+import "./App.scss";
 
 import CardList from "./components/card-list/card-list.component";
 import { MonsterSearchProps } from "./state/monster";
@@ -51,7 +51,6 @@ class App extends Component<AppProps, MonsterSearchProps> {
     return (
       <div className="App">
         <SearchBox
-          className="search-box"
           onSearchChange={onSearchChange}
           placeholder="Search monsters"
         />
