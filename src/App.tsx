@@ -3,7 +3,7 @@ import "./App.css";
 
 interface AppProps {}
 interface AppState {
-  [key: string]: { name: string }[];
+  [key: string]: { name: string; id: string }[];
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -14,15 +14,19 @@ class App extends React.Component<AppProps, AppState> {
       monsters: [
         {
           name: "Linda",
+          id: "0",
         },
         {
           name: "Frank",
+          id: "1",
         },
         {
           name: "Jacky",
+          id: "2",
         },
         {
           name: "Andrei",
+          id: "3",
         },
       ],
     };
@@ -31,7 +35,7 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <div className="App">
         {this.state.monsters.map((monster) => {
-          return <h1 key={monster.name}>{monster.name}</h1>;
+          return <h1 key={monster.id}>{monster.name}</h1>;
         })}
       </div>
     );
