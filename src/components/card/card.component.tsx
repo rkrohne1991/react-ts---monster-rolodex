@@ -1,3 +1,4 @@
+import { Monster } from "../../state/monster";
 import classes from "./card.module.scss";
 
 interface CardProps {
@@ -6,7 +7,7 @@ interface CardProps {
   email: string;
 }
 
-const Card: React.FC<CardProps> = ({ id, name, email }) => (
+const Card: React.FC<CardProps> = ({ id, name, email }: Monster) => (
   <div className={classes["card-container"]}>
     <img
       src={`https://robohash.org/${id}?set=set2&size=180x180`}
