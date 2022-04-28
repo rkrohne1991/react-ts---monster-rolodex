@@ -1,7 +1,11 @@
 import { combineReducers } from "redux";
 
-import errorReducer from "./errorReducer";
+import modalReducer from "./modalReducer";
 
-export default combineReducers({
-  error: errorReducer,
+const reducers = combineReducers({
+  modal: modalReducer,
 });
+
+export default reducers;
+
+export type RootState = ReturnType<typeof reducers>;

@@ -1,1 +1,2 @@
-export * from "./errorActions"
+export * from "./errorActions";
+export * from "./modalActions";
