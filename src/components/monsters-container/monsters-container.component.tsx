@@ -31,7 +31,7 @@ const MonstersContainer: React.FC = () => {
       fetchUsers();
       setMonstersLoading(false);
     }, 2000);
-  }, []);
+  }, [handleError]);
 
   useEffect(() => {
     const newFilteredMonsters = monsters.filter((monster: any) => {
