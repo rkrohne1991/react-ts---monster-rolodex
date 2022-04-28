@@ -1,28 +1,34 @@
 import { useEffect, useState } from "react";
+import { useErrorHandler } from "react-error-boundary";
 
 import SearchBox from "../search-box/search-box.component";
 import CardList from "../card-list/card-list.component";
 
 import { Monster } from "../../state/monster";
-import { getData } from "../../utils/data.utils";
 
 const MonstersContainer: React.FC = () => {
   const [searchField, setSearchField] = useState<string>("");
   const [monsters, setMonsters] = useState<Monster[]>([]);
   const [filteredMonsters, setFilteredMonsters] = useState<Monster[]>(monsters);
+  const handleError = useErrorHandler();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const users = await getData<Monster[]>(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      setMonsters(users);
-    };
+    const fetchUsers = async () =>
+      await fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(`Something went wrong: ${response.status}`);
+        })
+        .then((responseJson) => setMonsters(responseJson))
+        .catch((error) => handleError(error));
+
     fetchUsers();
   }, []);
 
   useEffect(() => {
-    const newFilteredMonsters = monsters.filter((monster) => {
+    const newFilteredMonsters = monsters.filter((monster: any) => {
       return monster.name.toLocaleLowerCase().includes(searchField);
     });
 

@@ -1,34 +1,23 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { useSelector } from "react-redux";
 
 import "./App.scss";
 
 import MonstersContainer from "./components/monsters-container/monsters-container.component";
-import { selectError } from "./hooks/error-selector";
 
-const ErrorFallback = ({
-  error,
-  resetErrorBoundary,
-}: {
-  error: any;
-  resetErrorBoundary: any;
-}) => {
-  console.log(error);
+const ErrorFallback = () => {
   return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      {/* <button onClick={resetErrorBoundary}>Try again</button> */}
+    <div className="error-fallback">
+      <div role="alert">
+        <p>Ooops something went wrong... Please try again later</p>
+      </div>
     </div>
   );
 };
 
 const App: React.FC = () => {
-  const error = useSelector(selectError);
-
-  console.log(error);
-
   const myErrorHandler = (error: Error, info: { componentStack: string }) => {
+    console.log("myErrorHandler");
+    console.log(info.componentStack);
     // Do something with the error
     // E.g. log to an error logging client here
   };
