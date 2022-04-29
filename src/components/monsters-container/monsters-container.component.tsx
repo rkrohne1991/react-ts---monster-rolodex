@@ -52,11 +52,10 @@ const MonstersContainer: React.FC = () => {
         <Spinner />
       ) : (
         <>
-          {" "}
           <SearchBox
             onSearchChange={onSearchChange}
             placeholder="Search monsters"
-          />{" "}
+          />
           <CardList monsters={filteredMonsters} />
         </>
       )}
