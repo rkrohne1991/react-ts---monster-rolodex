@@ -6,6 +6,16 @@ import CardList from "../card-list/card-list.component";
 
 import { Monster } from "../../state/monster";
 import Spinner from "../spinner/spinner.component";
+import { useGetUsersQuery } from "../../store/reducers/userReducer";
+
+type userApiDataType = {
+  [key: string]: any;
+};
+
+type userApiErrorType = {
+  status: number | undefined;
+  data: userApiDataType;
+};
 
 const MonstersContainer: React.FC = () => {
   const [searchField, setSearchField] = useState<string>("");
@@ -13,25 +23,28 @@ const MonstersContainer: React.FC = () => {
   const [filteredMonsters, setFilteredMonsters] = useState<Monster[]>(monsters);
   const [monstersLoading, setMonstersLoading] = useState<boolean>(true);
   const handleError = useErrorHandler();
+  const response = useGetUsersQuery();
 
   useEffect(() => {
-    setMonstersLoading(true);
-    setTimeout(() => {
-      const fetchUsers = async () =>
-        await fetch("https://jsonplaceholder.typicode.com/users")
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error(`Something went wrong: ${response.status}`);
-          })
-          .then((responseJson) => setMonsters(responseJson))
-          .catch((error) => handleError(error));
+    const { isError, isLoading, data, error, isSuccess } = response;
+    const errorType = error as userApiErrorType;
 
-      fetchUsers();
+    if (isLoading) {
+      setMonstersLoading(true);
+    } else {
       setMonstersLoading(false);
-    }, 2000);
-  }, [handleError]);
+    }
+
+    if (isError) {
+      setMonstersLoading(false);
+      handleError(errorType && errorType.status);
+      throw new Error(`Something went wrong: ${errorType.status}`);
+    }
+
+    if (isSuccess) {
+      setMonsters(data);
+    }
+  }, [response, handleError]);
 
   useEffect(() => {
     const newFilteredMonsters = monsters.filter((monster: any) => {

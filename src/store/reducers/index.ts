@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
 
 import modalReducer from "./modalReducer";
+import { userApi } from "./userReducer";
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
+  [userApi.reducerPath]: userApi.reducer,
   modal: modalReducer,
 });
 
-export default reducers;
-
-export type RootState = ReturnType<typeof reducers>;
+export type RootState = ReturnType<typeof rootReducer>;
+export default rootReducer;

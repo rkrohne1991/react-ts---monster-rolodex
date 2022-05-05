@@ -1,26 +1,30 @@
-import { AnyAction } from 'redux';
-import { setIsModalOpen, setModalContent } from '../action-creators';
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from ".";
 
-export type ModalState = {
+export interface ModalState {
   readonly isModalOpen: boolean;
   readonly modalData: string;
-};
+}
 
-const initialState: ModalState = {
+export const initialState: ModalState = {
   isModalOpen: false,
-  modalData: '',
+  modalData: "",
 };
 
-const reducer = (state: ModalState = initialState, action: AnyAction) => {
-  if (setIsModalOpen.match(action)) {
-    return { ...state, isModalOpen: action.payload };
-  }
+export const modalSlice = createSlice({
+  name: "modal",
+  initialState,
+  reducers: {
+    setIsModalOpen: (state, { payload }: { payload: boolean }) => {
+      state.isModalOpen = payload;
+    },
+    setModalContent: (state, { payload }: { payload: string }) => {
+      state.modalData = payload;
+    },
+  },
+});
 
-  if (setModalContent.match(action)) {
-    return { ...state, modalData: action.payload };
-  }
-
-  return state;
-};
-
+const { actions, reducer } = modalSlice;
+export const { setIsModalOpen, setModalContent } = actions;
+export const modalSelector = (state: RootState) => state.modal;
 export default reducer;

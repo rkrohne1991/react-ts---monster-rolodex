@@ -4,10 +4,9 @@ import "./App.scss";
 
 import MonstersContainer from "./components/monsters-container/monsters-container.component";
 import Modal from "./components/modal/modal.component";
-import { useDispatch, useSelector } from "react-redux";
-
-import { selectIsModalOpen, selectModalContent } from "./hooks/modal-selector";
-import { setIsModalOpen, setModalContent } from "./store/action-creators";
+import { useDispatch } from "react-redux";
+import { setIsModalOpen, setModalContent } from "./store/reducers/modalReducer";
+import { useAppSelector } from "./hooks";
 
 const ErrorFallback = () => {
   return (
@@ -21,8 +20,8 @@ const ErrorFallback = () => {
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const isModalOpen = useSelector(selectIsModalOpen);
-  const modalContent = useSelector(selectModalContent);
+  const isModalOpen = useAppSelector((state) => state.modal.isModalOpen);
+  const modalData = useAppSelector((state) => state.modal.modalData);
 
   const myErrorHandler = (error: Error, info: { componentStack: string }) => {
     // Do something with the error
@@ -42,7 +41,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1 className="app-title">Monster Rolodex</h1>
-      {isModalOpen && <Modal onClose={hideModalHandler}>{modalContent}</Modal>};
+      {isModalOpen && <Modal onClose={hideModalHandler}>{modalData}</Modal>};
       <ErrorBoundary FallbackComponent={ErrorFallback} onError={myErrorHandler}>
         <MonstersContainer />
       </ErrorBoundary>
